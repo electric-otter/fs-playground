@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoxScript Code Editor</title>
+    <!-- Include the FoxScript interpreter -->
+    <script src="https://foxscript.vercel.app/interpreter.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            font-family: monospace;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>FoxScript Code Editor</h1>
+    <textarea id="codeEditor" placeholder="Write your FoxScript code here..."></textarea>
+    <br><br>
+    <button onclick="runFoxScript()">Run FoxScript</button>
+
+    <div class="output" id="output"></div>
+
+    <script>
+        function runFoxScript() {
+            const code = document.getElementById('codeEditor').value;
+
+            try {
+                // Assuming interpreter.js has a function `runFoxScriptCode` to interpret the code
+                const result = runFoxScriptCode(code); // Use the function defined in interpreter.js
+                // Display the output from the interpreter
+                document.getElementById('output').innerText = result || 'No output or error occurred';
+            } catch (error) {
+                document.getElementById('output').innerText = 'Error executing FoxScript code: ' + error.message;
+            }
+        }
+    </script>
+
+</body>
+</html>
