@@ -54,13 +54,29 @@
             const code = document.getElementById('codeEditor').value;
 
             try {
-                // Assuming interpreter.js has a function `runFoxScriptCode` to interpret the code
-                const result = runFoxScriptCode(code); // Use the function defined in interpreter.js
-                // Display the output from the interpreter
-                document.getElementById('output').innerText = result || 'No output or error occurred';
+                // Create a temporary file for the code and execute it using forceLoadAndExecute
+                const blob = new Blob([code], { type: 'text/javascript' });
+                const url = URL.createObjectURL(blob);
+                
+                // Dynamically load and execute the code using forceLoadAndExecute
+                forceLoadAndExecute(url);
             } catch (error) {
                 document.getElementById('output').innerText = 'Error executing FoxScript code: ' + error.message;
             }
+        }
+
+        // The function forceLoadAndExecute (from your provided code)
+        function forceLoadAndExecute(url) {
+            fetch(url)
+                .then(res => res.text())  // Get script as text
+                .then(code => {
+                    // Execute the loaded C script (with error handling in C file)
+                    eval(code);  // This assumes the C script is compiled and executed in the browser context
+                })
+                .catch(err => {
+                    console.error("Execution failed:", err);
+                    document.getElementById('output').innerText = "Error loading the code.";
+                });
         }
     </script>
 
